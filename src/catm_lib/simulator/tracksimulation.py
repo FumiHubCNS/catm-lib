@@ -10,7 +10,7 @@ import matplotlib.cm as cm
 import numpy as np
 from matplotlib.path import Path
 import matplotlib.colors as mcolors
-import catmlib.simulator.trialpad as btpad
+import catm_lib.simulator.trialpad as btpad
 import argparse 
 
 class TrackSimulator():

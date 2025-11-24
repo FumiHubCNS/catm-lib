@@ -6,7 +6,7 @@
 @brief trial pad configuration utillities
 """
 import numpy as np
-import catmlib.readoutpad.basepad as basepad
+import catm_lib.readoutpad.basepad as basepad
 import argparse 
 
 def get_original_beamtpc_pad_array():
