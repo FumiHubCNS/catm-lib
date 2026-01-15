@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "FumiHubCNS", email = "fendo@cns.s.u-tokyo.ac.jp" }
 ]
-requires-python = ">=3.13"
+requires-python = ">=3.11"
 dependencies = [
     "iminuit>=2.31.1",
     "matplotlib>=3.10.3",
