@@ -6,12 +6,61 @@
 @brief analysis utilities related to CAT-M 
 """
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from matplotlib.gridspec import GridSpec
 from matplotlib.colors import to_hex
+
+def get_color_bins(values, cmap_name="viridis", fmt="hex", n_bins=10):
+    values = np.asarray(values)
+    if values.size == 0:
+        return np.array([]), []
+
+    if n_bins <= 0:
+        raise ValueError("n_bins must be >= 1")
+
+    vmin = float(np.min(values))
+    vmax = float(np.max(values))
+
+    if np.isclose(vmin, vmax):
+        # 1bin
+        edges = np.array([vmin, vmax])
+        n_bins_eff = 1
+    else:
+        edges = np.linspace(vmin, vmax, n_bins + 1)
+        n_bins_eff = n_bins
+
+    cmap = plt.get_cmap(cmap_name, n_bins_eff)
+    rgba = [cmap(i) for i in range(n_bins_eff)]
+
+    if fmt == "hex":
+        colors = [to_hex(c[:3]) for c in rgba]
+    elif fmt == "rgb":
+        colors = [tuple(int(round(ch * 255)) for ch in c[:3]) for c in rgba]
+    else:
+        raise ValueError("fmt must be 'hex' or 'rgb'")
+
+    return edges, colors
+
+
+def get_color_array(values, edges, colors):
+    """
+    edges: 長さ n_bins+1 の境界配列
+    colors: 長さ n_bins の色リスト
+    """
+    values = np.asarray(values, dtype=float)
+    edges = np.asarray(edges, dtype=float)
+
+    if values.size == 0:
+        return []
+
+    # bin index を計算: 0..n_bins-1
+    idx = np.digitize(values, edges, right=False) - 1
+    idx = np.clip(idx, 0, len(colors) - 1)
+
+    return [colors[i] for i in idx]
+
 
 def get_color_list(values, cmap_name="viridis", fmt="hex"):
     """!
@@ -44,12 +93,12 @@ def get_color_list(values, cmap_name="viridis", fmt="hex"):
 
     return list(bins), list(colors)
 
-def get_color_array(values,bins,colors):
-    color_array = []
-    for i in range(len(values)):
-        color_array.append(colors[bins.index(int(values[i]))])
+# def get_color_array(values,bins,colors):
+#     color_array = []
+#     for i in range(len(values)):
+#         color_array.append(colors[bins.index(int(values[i]))])
     
-    return color_array
+#     return color_array
 
 
 def find_nearest_index(array, value):
