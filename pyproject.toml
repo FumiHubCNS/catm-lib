@@ -15,15 +15,9 @@ dependencies = [
     "plotly>=6.2.0",
     "schemdraw>=0.20",
     "scipy>=1.16.0",
-    "PySpice @ git+https://github.com/PySpice-org/PySpice.git",
     "networkx>=3.5",
     "marimo>=0.20.4",
     "marimo-lib",
-    "h5py>=3.16.0",
-    "pyqtgraph>=0.14.0",
-    "pyside6>=6.11.0",
-    "pyvisa>=1.16.2",
-    "pyvisa-py>=0.8.1",
 ]
 
 [project.scripts]
