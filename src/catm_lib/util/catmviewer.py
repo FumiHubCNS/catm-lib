@@ -658,7 +658,7 @@ def check_catm_view():
     @brief plot catm readpad using matplotlib 
     """
   
-    import catmlib.readoutpad.catm as catpad
+    import catm_lib.readoutpad.catm as catpad
       
     beamtpc = catpad.get_beam_tpc_array()
     recoiltpc = catpad.get_recoil_tpc_array()

@@ -1,6 +1,7 @@
 """Basic readout pad generation package."""
 import matplotlib.pyplot as plt
 import numpy as np
+import copy
 
 plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif']
@@ -330,7 +331,7 @@ class TReadoutPadArray():
     plt.close(fig) 
 
 
-def generate_regular_n_polygon(n=3, length=3, theta=0, flag=True):
+def generate_regular_n_polygon(n=3, length=3, theta=0, plane='xz', flag=True):
   """Generate regular n polygon.
 
   Args:
@@ -356,10 +357,22 @@ def generate_regular_n_polygon(n=3, length=3, theta=0, flag=True):
     rotated_vertices = [np.dot(rotation_matrix, vertex) for vertex in vertices]
 
     for i in range(len(vertices)):
-      base_padinfo.add_polygon([rotated_vertices[i][0], 0, rotated_vertices[i][1]])
+      # base_padinfo.add_polygon([rotated_vertices[i][0], 0, rotated_vertices[i][1]])
+
+      if plane=='yz' or plane=='zy':
+        base_padinfo.add_polygon([0, rotated_vertices[i][0], rotated_vertices[i][1]])
+
+      elif plane=='xy' or plane=='yx':
+        base_padinfo.add_polygon([rotated_vertices[i][0], rotated_vertices[i][1], 0])
+
+      elif plane=='xz' or plane=='zx':
+        base_padinfo.add_polygon([rotated_vertices[i][0], 0, rotated_vertices[i][1]])
+
 
     if flag:
-      base_padinfo.show_polygon('xz')
+      base_padinfo.show_polygon(plane=plane)
+
+
     return base_padinfo
 
 def generate_oblong_4_polygon(longlength=4, shortlength=2, plane='yz', flag=True):
@@ -397,3 +410,21 @@ def generate_oblong_4_polygon(longlength=4, shortlength=2, plane='yz', flag=True
   if flag:
     base_padinfo.show_polygon(plane)
   return base_padinfo
+
+
+def marge_padinfos(pad1:TReadoutPadArray, pad2: TReadoutPadArray):
+
+  obj = copy.deepcopy(pad1)
+  gid = max(pad1.ids)
+
+  offset = gid + 1 
+  for i in range(len(pad2.ids)):
+    polygon_new = pad2.pads[i]
+    id = offset + pad2.ids[i]
+
+    obj.pads.append(polygon_new)
+    obj.ids.append(id)
+    obj.centers.append(np.mean(polygon_new, axis=0))
+    obj.charges.append(0)
+
+  return obj

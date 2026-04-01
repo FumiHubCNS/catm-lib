@@ -8,7 +8,7 @@
 import argparse
 import pathlib
 import PySpice
-import catmlib.circuit.basecircuit as bc
+import catm_lib.circuit.basecircuit as bc
 import PySpice.Logging.Logging as Logging
 from PySpice.Probe.Plot import plot
 from PySpice.Spice.Netlist import Circuit

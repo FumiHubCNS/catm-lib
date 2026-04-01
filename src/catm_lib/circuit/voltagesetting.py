@@ -7,8 +7,8 @@
 """
 import argparse
 import pathlib
-import catmlib.circuit.basecircuit as bc
-import catmlib.circuit.circuitsimulator as cs
+import catm_lib.circuit.basecircuit as bc
+import catm_lib.circuit.circuitsimulator as cs
 import PySpice
 import PySpice.Logging.Logging as Logging
 from PySpice.Probe.Plot import plot

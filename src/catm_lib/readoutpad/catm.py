@@ -17,7 +17,7 @@ def get_beam_tpc_array():
   @detail pad length withou gap = 5. number of pad = 22 (11 x 2)
   @return beam tpc pad array (TReadoutPadArray)
   """
-  base_padinfo = generate_regular_n_polygon(3, 4.74, 90, False)
+  base_padinfo = generate_regular_n_polygon(n=3, length=4.74, theta=90, plane='xz', flag=False)
 
   pad = TReadoutPadArray()
   pad.add_basepad(base_padinfo)
@@ -41,7 +41,7 @@ def get_recoil_tpc_array():
   @detail pad length withou gap = 7. number of pad = 4048 ( (23x2) x 88 )
   @return recoil tpc pad array (TReadoutPadArray)
   """
-  base_padinfo = generate_regular_n_polygon(3, 6.9133974596, 90, False)
+  base_padinfo = generate_regular_n_polygon(n=3, length=6.9133974596, theta=90, plane='xz', flag=False)
 
   pad = TReadoutPadArray()
   pad.add_basepad(base_padinfo)
